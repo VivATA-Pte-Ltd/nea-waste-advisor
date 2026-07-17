@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-17T06:09:33Z",
+  "code": {
+    "title": "NEA Code of Practice on Environmental Health",
+    "edition": "2025 Edition",
+    "sourceUrl": "https://www.nea.gov.sg/docs/default-source/resource/practices-/copeh-2025.pdf",
+    "sourceDiscoveryUrl": "https://www.nea.gov.sg/corporate-functions/resources/practices-and-guidelines/guidelines/practices",
+    "pdfSha256": "85059107d90cdda6df1322b262557564b415d86ead6b224b1f881a0889a58dc4",
+    "fetchedAt": "2026-07-17T06:09:33Z"
+  },
+  "rates": {
+    "Office / Classroom": {
+      "rate": 15,
+      "unitType": "area",
+      "label": "L per 100 sqm GFA"
+    },
+    "Hotel / Dormitory / Store / Industrial": {
+      "rate": 10,
+      "unitType": "area",
+      "label": "L per 100 sqm GFA"
+    },
+    "Retail Shop / Trade Premises": {
+      "rate": 30,
+      "unitType": "area",
+      "label": "L per 100 sqm GFA"
+    },
+    "Supermarket / Market / Department Store": {
+      "rate": 100,
+      "unitType": "area",
+      "label": "L per 100 sqm GFA"
+    },
+    "Restaurant / Eating House / Food Centre / Canteen / Pantry / Food Shop / Food Processing Establishment": {
+      "rate": 200,
+      "unitType": "area",
+      "label": "L per 100 sqm GFA"
+    },
+    "Residential Premises": {
+      "rate": 20,
+      "unitType": "units",
+      "label": "L per dwelling premises"
+    },
+    "Petrol Station": {
+      "rate": 300,
+      "unitType": "units",
+      "label": "L per premises"
+    }
+  },
+  "rules": {
+    "binCentreAboveLitresPerDay": 1000,
+    "enclosedSystemAtOrAboveLitresPerDay": 4000,
+    "storageDays": 2,
+    "wheeledBinCapacityLitres": 660,
+    "pwcsResidentialUnits": 500,
+    "recyclablesFraction": 0.3,
+    "recyclablesMinimumLitresPerDay": 240,
+    "largeFoodManufacturerOperationAreaSqm": 750,
+    "residentialChuteStoreysAbove": 4,
+    "pwcsUraApplicationFrom": "2018-04-01",
+    "recyclablesChuteUraApplicationFrom": "2018-04-01",
+    "foodWasteUraApplicationFrom": "2021-01-01"
+  },
+  "extraction": {
+    "status": "validated",
+    "engine": "PyMuPDF 1.28.0 + strict clause parser v1",
+    "sourcePageCount": 56,
+    "rateCategoryCount": 7,
+    "warnings": []
+  }
+}

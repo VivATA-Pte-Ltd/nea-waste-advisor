@@ -1,0 +1,1967 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>NEA Refuse Output & Waste System Advisor · Auto-Update Edition V4.3</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #eef2f5;
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            margin: 0;
+            padding: 2rem 1rem;
+            color: #1a2c3e;
+        }
+
+        .container {
+            max-width: 1500px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            font-size: 1.9rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, #1e4668, #0f2c44);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin: 0 0 0.25rem 0;
+        }
+
+        .badge {
+            background: #e9f0f5;
+            border-left: 6px solid #1f6e43;
+            padding: 0.8rem 1.5rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin: 1rem auto;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .calculator-card {
+            background: white;
+            border-radius: 32px;
+            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.1);
+            padding: 1.8rem 2rem 2rem 2rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            border-left: 6px solid #2c7a4d;
+            padding-left: 1rem;
+            margin: 0 0 1.5rem 0;
+            color: #1f3b4c;
+        }
+
+        .project-type-card {
+            background: #f0f6fa;
+            border-radius: 24px;
+            padding: 1.2rem 1.8rem;
+            margin-bottom: 1.8rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 2rem;
+            border: 1px solid #cde0ec;
+        }
+
+        .project-type-label {
+            font-weight: 700;
+            font-size: 1rem;
+            color: #1e4668;
+        }
+
+        .project-radio-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .project-radio-group label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .project-radio-group input {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .ref-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fefefe;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+            font-size: 0.85rem;
+        }
+
+        .ref-table th,
+        .ref-table td {
+            padding: 10px;
+            border-bottom: 1px solid #e9edf2;
+            text-align: left;
+        }
+
+        .input-area {
+            background: #f8fafd;
+            border-radius: 24px;
+            padding: 1.2rem;
+            margin-top: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .dynamic-rows {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .dynamic-rows th,
+        .dynamic-rows td {
+            padding: 12px 8px;
+            text-align: left;
+            vertical-align: middle;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .category-select {
+            width: 100%;
+            padding: 10px 8px;
+            border-radius: 14px;
+            border: 1px solid #cbd5e1;
+            background: white;
+            font-weight: 500;
+            font-size: 0.85rem;
+            cursor: pointer;
+        }
+
+        .space-input {
+            width: 180px;
+            padding: 10px 8px;
+            border-radius: 14px;
+            border: 1px solid #cbd5e1;
+            font-size: 0.85rem;
+        }
+
+        .area-input {
+            width: 120px;
+            padding: 10px 6px;
+            border-radius: 14px;
+            border: 1px solid #cbd5e1;
+            text-align: right;
+            font-weight: 500;
+        }
+
+        .output-litres {
+            font-weight: 700;
+            background: #eef3fa;
+            padding: 6px 12px;
+            border-radius: 40px;
+            display: inline-block;
+            min-width: 80px;
+            text-align: center;
+        }
+
+        .total-card {
+            background: linear-gradient(115deg, #e9f3ec, #ffffff);
+            border-radius: 24px;
+            padding: 1.4rem 2rem;
+            margin: 1.8rem 0 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .total-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #1f6e43;
+        }
+
+        .bag-count {
+            font-size: 1.6rem;
+            font-weight: 700;
+            background: #2c5a7a;
+            color: white;
+            padding: 0.3rem 1.2rem;
+            border-radius: 60px;
+            display: inline-block;
+        }
+
+        .recommendation-panel {
+            background: #fef7e0;
+            border-left: 8px solid #f5a623;
+            border-radius: 20px;
+            padding: 1.2rem 1.8rem;
+            margin: 1.5rem 0;
+        }
+
+        .recommendation-title {
+            font-weight: 800;
+            font-size: 1.2rem;
+            color: #b85c00;
+            margin-bottom: 0.8rem;
+        }
+
+        .system-card {
+            background: #e8f0fe;
+            border-radius: 20px;
+            padding: 1rem 1.5rem;
+            margin: 1rem 0;
+            border-left: 6px solid #2c5a7a;
+        }
+
+        .system-title {
+            font-weight: 700;
+            font-size: 1rem;
+            color: #1e4668;
+            margin-bottom: 0.5rem;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+            justify-content: flex-end;
+        }
+
+        .btn {
+            border: none;
+            font-weight: 600;
+            padding: 12px 24px;
+            border-radius: 40px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: #1f6e43;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #145c38;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #2c5a7a;
+            color: white;
+        }
+        .btn-secondary:hover {
+            background: #1f4a65;
+        }
+
+        .btn-excel {
+            background: #1f7b4d;
+            color: white;
+        }
+        .btn-excel:hover {
+            background: #16663d;
+        }
+
+        .btn-word {
+            background: #2a5799;
+            color: white;
+        }
+        .btn-word:hover {
+            background: #1e457a;
+        }
+
+        .btn-pdf {
+            background: #c0392b;
+            color: white;
+        }
+        .btn-pdf:hover {
+            background: #a93226;
+        }
+
+        .btn-folder {
+            background: #6c5ce7;
+            color: white;
+        }
+        .btn-folder:hover {
+            background: #5b4bc4;
+        }
+
+        .remove-btn {
+            background: #b91c1c;
+            padding: 6px 14px;
+            font-size: 0.8rem;
+            border: none;
+            border-radius: 30px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .footnote {
+            font-size: 0.75rem;
+            color: #5a6e7c;
+            margin-top: 2rem;
+            border-top: 1px solid #e2edf2;
+            padding-top: 1rem;
+            text-align: center;
+        }
+
+        .residential-note {
+            background: #e6f4ea;
+            border-radius: 16px;
+            padding: 0.8rem 1.2rem;
+            margin: 0.8rem 0;
+            font-size: 0.85rem;
+        }
+
+        .folder-status {
+            background: #eef2fa;
+            border-radius: 12px;
+            padding: 0.6rem 1rem;
+            margin: 0.5rem 0;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .folder-path {
+            font-family: monospace;
+            font-size: 0.75rem;
+            color: #2c5a7a;
+            word-break: break-all;
+        }
+
+        .success-msg {
+            background: #d4edda;
+            color: #155724;
+            padding: 8px 12px;
+            border-radius: 12px;
+            margin: 5px 0;
+            font-size: 0.8rem;
+        }
+
+        /* Page Size Selector */
+        .page-size-selector {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            background: #f0f6fa;
+            padding: 0.6rem 1.2rem;
+            border-radius: 16px;
+            border: 1px solid #cde0ec;
+            flex-wrap: wrap;
+        }
+
+        .page-size-selector label {
+            font-weight: 600;
+            color: #1e4668;
+        }
+
+        .page-size-selector select {
+            padding: 0.4rem 1rem;
+            border-radius: 30px;
+            border: 1px solid #cbd5e1;
+            font-weight: 500;
+            font-size: 0.9rem;
+            background: white;
+            cursor: pointer;
+        }
+
+        /* Loading indicator */
+        .loading-indicator {
+            display: none;
+            background: #e3f2fd;
+            border-radius: 12px;
+            padding: 0.5rem 1rem;
+            margin: 0.5rem 0;
+            font-size: 0.85rem;
+            color: #0d47a1;
+        }
+
+        .loading-indicator.active {
+            display: block;
+        }
+
+        /* Version badge */
+        .version-badge {
+            background: #1e4668;
+            color: white;
+            padding: 0.15rem 0.8rem;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 500;
+        }
+
+        .copyright-badge {
+            background: #1a2c3e;
+            color: #eef2f7;
+            padding: 0.2rem 1rem;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+            display: inline-block;
+            margin-top: 0.5rem;
+        }
+
+        .update-notification {
+            background: #fff3cd;
+            border-left: 6px solid #ffc107;
+            border-radius: 16px;
+            padding: 0.8rem 1.5rem;
+            margin: 0.5rem 0 1rem 0;
+            display: none;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            font-size: 0.9rem;
+        }
+
+        .update-notification.show {
+            display: flex;
+        }
+
+        .update-notification .update-btn {
+            background: #1e4668;
+            color: white;
+            border: none;
+            padding: 0.3rem 1.2rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.8rem;
+            transition: 0.15s;
+        }
+        .update-notification .update-btn:hover {
+            background: #0f2c44;
+        }
+
+        @media (max-width: 700px) {
+            .calculator-card {
+                padding: 1rem;
+            }
+            .space-input {
+                width: 120px;
+            }
+            .area-input {
+                width: 80px;
+            }
+            .header h1 {
+                font-size: 1.4rem;
+            }
+            .page-size-selector {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .update-notification {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        /* V4 professional workflow enhancements */
+        :root { --ink:#142536; --muted:#607080; --line:#d7e0e7; --surface:#fff; --soft:#f5f8fa; --accent:#176b43; --blue:#245b7a; }
+        body { color:var(--ink); }
+        .calculator-card { border-radius:18px; border:1px solid var(--line); }
+        .project-type-card,.input-area,.total-card,.recommendation-panel,.system-card,.residential-note,.folder-status,.page-size-selector { border-radius:12px; }
+        .project-meta { display:grid; grid-template-columns:repeat(3,minmax(180px,1fr)); gap:1rem; margin:0 0 1.25rem; padding:1rem 1.2rem; border:1px solid var(--line); border-radius:12px; background:var(--surface); }
+        .field { display:grid; gap:.35rem; }
+        .field label { font-size:.78rem; font-weight:700; color:#365166; }
+        .field input { width:100%; min-height:44px; padding:.65rem .8rem; border:1px solid #b9c8d3; border-radius:8px; font:inherit; background:white; }
+        .field input:focus,.space-input:focus,.area-input:focus,.category-select:focus,.page-size-selector select:focus { outline:3px solid rgba(36,91,122,.2); border-color:var(--blue); }
+        .compliance-strip { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:1px; overflow:hidden; border:1px solid var(--line); border-radius:12px; margin:1.25rem 0; background:var(--line); }
+        .compliance-item { background:white; padding:.8rem 1rem; }
+        .compliance-item span { display:block; color:var(--muted); font-size:.72rem; text-transform:uppercase; letter-spacing:.04em; }
+        .compliance-item strong { display:block; margin-top:.2rem; font-size:.95rem; }
+        .notice { padding:.8rem 1rem; border:1px solid #edcf9c; background:#fff9ee; border-radius:10px; color:#6e4300; font-size:.8rem; line-height:1.45; }
+        .verified-source { margin: 0 0 1.4rem; padding: .9rem 1rem; border: 1px solid #b9d8c7; border-radius: 10px; background: #f1f9f4; font-size: .82rem; line-height: 1.5; }
+        .verified-source strong { color: #145c38; }
+        .verified-source a { color: #174f72; font-weight: 650; }
+        .live-standard-status { display: inline-flex; align-items: center; gap: .4rem; margin-top: .45rem; padding: .28rem .6rem; border-radius: 6px; background: #e3efe8; color: #174f35; font-weight: 700; }
+        .live-standard-status.warning { background: #fff0d5; color: #764500; }
+        .live-standard-status.error { background: #fde7e7; color: #8a2020; }
+        .standards-audit { margin-top: .65rem; }
+        .standards-audit summary { cursor: pointer; font-weight: 650; color: #315369; }
+        .standards-audit pre { max-height: 14rem; overflow: auto; padding: .65rem; border-radius: 7px; background: #132432; color: #e7f1f6; white-space: pre-wrap; font-size: .7rem; }
+        .autosave-status { color:var(--muted); font-size:.75rem; margin-right:auto; align-self:center; }
+        .btn { min-height:44px; border-radius:8px; }
+        .remove-btn { min-width:44px; min-height:44px; border-radius:8px; }
+        @media (max-width:850px) { .project-meta{grid-template-columns:1fr}.compliance-strip{grid-template-columns:1fr 1fr}.dynamic-rows{min-width:760px}.input-area{overflow-x:auto} }
+        @media (max-width:520px) { .compliance-strip{grid-template-columns:1fr} }
+
+        /* V4.1 responsive phone + tablet layout */
+        html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+        body { overflow-x: hidden; }
+        input, select, button { touch-action: manipulation; }
+
+        @media (max-width: 900px) {
+            body { padding: 1rem .75rem calc(1rem + env(safe-area-inset-bottom)); }
+            .header { margin-bottom: 1rem; }
+            .header h1 { font-size: clamp(1.35rem, 4vw, 1.8rem); line-height: 1.2; }
+            .header p { margin: .45rem 0; font-size: .9rem; }
+            .badge { width: 100%; margin: .65rem 0; padding: .65rem .8rem; gap: .45rem .8rem; border-radius: 10px; }
+            .calculator-card { padding: 1rem; }
+            .project-type-card { display: block; padding: 1rem; }
+            .project-type-label { display: block; margin-bottom: .75rem; }
+            .project-radio-group { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: .6rem; }
+            .project-radio-group label { min-height: 48px; padding: .65rem .75rem; border: 1px solid #c7d5df; border-radius: 9px; background: white; }
+            .project-radio-group label:has(input:checked) { border-color: var(--accent); background: #edf7f1; box-shadow: inset 0 0 0 1px var(--accent); }
+            .project-meta { grid-template-columns: repeat(2,minmax(0,1fr)); }
+            .project-meta .field:last-child { grid-column: 1 / -1; }
+            .page-size-selector { align-items: stretch; }
+            .page-size-selector select { min-height: 48px; flex: 1; }
+            .ref-table { table-layout: fixed; font-size: .8rem; }
+            .ref-table th:first-child, .ref-table td:first-child { width: 62%; }
+            .ref-table th, .ref-table td { overflow-wrap: anywhere; }
+
+            .input-area { overflow: visible; padding: 1rem; }
+            .dynamic-rows { display: block; min-width: 0 !important; width: 100%; }
+            .dynamic-rows thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+            .dynamic-rows tbody { display: grid; gap: .9rem; }
+            .dynamic-rows tr { display: grid; grid-template-columns: 1fr; padding: .9rem; border: 1px solid #d5e0e7; border-radius: 12px; background: white; box-shadow: 0 4px 12px rgba(20,37,54,.05); }
+            .dynamic-rows td { display: grid; grid-template-columns: minmax(120px,.48fr) minmax(0,1fr); align-items: center; gap: .75rem; width: 100%; padding: .48rem 0; border: 0; }
+            .dynamic-rows td::before { content: attr(data-label); font-size: .72rem; line-height: 1.2; font-weight: 750; color: #506575; text-transform: uppercase; letter-spacing: .03em; }
+            .dynamic-rows td:last-child { display: flex; justify-content: flex-end; padding-top: .7rem; border-top: 1px solid #e3e9ed; }
+            .dynamic-rows td:last-child::before { content: none; }
+            .space-input, .area-input, .category-select { width: 100%; max-width: none; min-height: 48px; border-radius: 8px; font-size: 16px; }
+            .output-litres { justify-self: stretch; min-height: 42px; display: inline-grid; place-items: center; border-radius: 8px; }
+            .remove-btn { min-width: 48px; min-height: 48px; }
+
+            .total-card { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); padding: 1rem; text-align: center; }
+            .total-card > div { min-width: 0; }
+            .total-number { font-size: clamp(1.7rem,6vw,2.3rem); }
+            .bag-count { font-size: 1.35rem; }
+            .compliance-strip { grid-template-columns: repeat(2,minmax(0,1fr)); }
+            .recommendation-panel, .system-card, .residential-note { padding: 1rem; }
+            .button-group { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: .65rem; }
+            .button-group .btn { width: 100%; justify-content: center; margin: 0; }
+            .button-group .autosave-status { grid-column: 1 / -1; margin: 0; text-align: left; }
+        }
+
+        @media (max-width: 560px) {
+            body { padding: 0 0 calc(.75rem + env(safe-area-inset-bottom)); background: white; }
+            .container { width: 100%; }
+            .header { width: 100%; max-width: 100%; padding: .9rem .8rem .25rem; overflow: hidden; }
+            .header h1 { width: 100%; max-width: 100%; padding: 0 .2rem; font-size: 1.15rem; line-height: 1.25; overflow-wrap: anywhere; word-break: normal; }
+            .header p { width: 100%; max-width: 100%; padding: 0 .2rem; font-size: .76rem; line-height: 1.4; overflow-wrap: anywhere; }
+            .badge { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); width: 100%; max-width: 100%; padding: .65rem; font-size: .72rem; }
+            .badge span { min-width: 0; white-space: normal; overflow-wrap: anywhere; justify-self: center; }
+            .calculator-card { padding: .8rem; border: 0; border-top: 1px solid var(--line); border-radius: 0; box-shadow: none; }
+            .section-title { font-size: 1.18rem; margin-bottom: 1rem; padding-left: .7rem; }
+            .project-radio-group { grid-template-columns: 1fr; }
+            .project-meta { grid-template-columns: 1fr; padding: .85rem; }
+            .project-meta .field:last-child { grid-column: auto; }
+            .folder-status { align-items: flex-start; }
+            .page-size-selector { gap: .45rem; }
+            .page-size-selector label, .page-size-selector span { width: 100%; }
+            .ref-table { display: block; }
+            .ref-table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+            .ref-table tbody { display: grid; gap: .55rem; }
+            .ref-table tr { display: grid; grid-template-columns: 1fr; padding: .65rem .75rem; border: 1px solid #dde5ea; border-radius: 9px; }
+            .ref-table td, .ref-table td:first-child { display: grid; grid-template-columns: 5.5rem 1fr; gap: .55rem; width: 100%; padding: .25rem 0; border: 0; }
+            .ref-table td::before { content: attr(data-label); font-size: .68rem; font-weight: 750; color: #607080; text-transform: uppercase; }
+            .input-area { margin-left: -.15rem; margin-right: -.15rem; padding: .75rem; }
+            .input-area > div:first-child { display: block !important; }
+            .input-area > div:first-child span { display: block; margin-top: .4rem; }
+            .dynamic-rows td { grid-template-columns: 1fr; gap: .3rem; }
+            .dynamic-rows td:last-child { justify-content: stretch; }
+            .remove-btn { width: 100%; }
+            .total-card { grid-template-columns: 1fr; text-align: left; gap: .75rem; }
+            .total-card > div { padding: .45rem 0; border-bottom: 1px solid #dce5df; }
+            .total-card > div:last-child { border-bottom: 0; }
+            .compliance-strip { grid-template-columns: 1fr; }
+            .button-group { grid-template-columns: 1fr; }
+            .recommendation-title { font-size: 1.05rem; }
+            .footnote { text-align: left; line-height: 1.5; }
+        }
+
+        @media (hover: none) and (pointer: coarse) {
+            .btn:hover { transform: none; }
+            .btn:active { filter: brightness(.92); }
+        }
+
+        /* ===== PRINT / PDF STYLES ===== */
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+                margin: 0;
+                display: block;
+            }
+            .calculator-card {
+                max-width: 100%;
+                box-shadow: none;
+                border: none;
+                border-radius: 0;
+                padding: 0.4in 0.5in;
+                margin: 0 auto;
+                page-break-after: avoid;
+                page-break-inside: avoid;
+                width: 100%;
+                background: white;
+            }
+            .btn,
+            .btn-group,
+            .button-group,
+            .folder-status,
+            .page-size-selector,
+            .remove-btn,
+            .badge .version-badge,
+            .badge .copyright-badge,
+            .update-notification {
+                display: none !important;
+            }
+            .header h1 {
+                color: #1e4668 !important;
+                background: none !important;
+                -webkit-background-clip: unset !important;
+                background-clip: unset !important;
+            }
+            .badge {
+                border-left: 6px solid #1f6e43;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+                background: #e9f0f5 !important;
+            }
+            .total-card {
+                background: #f0f5f0 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .recommendation-panel {
+                background: #fef7e0 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .system-card {
+                background: #e8f0fe !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .residential-note {
+                background: #e6f4ea !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .ref-table th {
+                background: #e9edf2 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .section-title {
+                border-left: 6px solid #2c7a4d;
+            }
+            .footnote {
+                border-top: 1px solid #ccc;
+            }
+            .project-type-card {
+                background: #f0f6fa !important;
+                border: 1px solid #cde0ec;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .input-area {
+                background: #f8fafd !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .output-litres {
+                background: #eef3fa !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .bag-count {
+                background: #2c5a7a !important;
+                color: white !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .loading-indicator {
+                display: none !important;
+            }
+            .dynamic-rows td,
+            .dynamic-rows th {
+                border: 1px solid #ccc;
+            }
+            .dynamic-rows {
+                border-collapse: collapse;
+            }
+            /* Ensure no blank pages */
+            .calculator-card {
+                page-break-inside: avoid;
+                page-break-after: avoid;
+                break-inside: avoid;
+            }
+            body {
+                break-after: avoid;
+            }
+            .container {
+                max-width: 100%;
+            }
+            .total-card,
+            .recommendation-panel,
+            .system-card,
+            .residential-note {
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>🗑️ NEA Refuse Output & Comprehensive Waste System Advisor</h1>
+        <p>Based on Singapore Code of Practice on Environmental Health (COPEH 2025 Edition)</p>
+        <div class="badge">
+            <span>📘 COPEH 2025 Compliant</span>
+            <span>🏢 Project Type Integration</span>
+            <span>🔍 Smart Space Mapping</span>
+            <span>📄 Professional PDF Reports</span>
+            <span class="version-badge" id="versionBadge">v4.3 Auto-Update</span>
+            <span class="copyright-badge">© VivATA Pte Ltd</span>
+        </div>
+    </div>
+
+    <div class="calculator-card" id="calculatorCard">
+        <!-- Loading Indicator -->
+        <div class="loading-indicator" id="loadingIndicator">
+            🔄 Checking for latest NEA COPEH data...
+        </div>
+
+        <!-- Update Notification -->
+        <div class="update-notification" id="updateNotification">
+            <span>🔄 <strong>New update available!</strong> The latest NEA COPEH standards have been fetched.</span>
+            <button class="update-btn" id="applyUpdateBtn">Apply Update</button>
+            <button class="update-btn" style="background:#6c757d;" id="dismissUpdateBtn">Dismiss</button>
+        </div>
+
+        <!-- PROJECT TYPE SELECTION -->
+        <div class="project-type-card">
+            <span class="project-type-label">🏗️ Type of Development / Project:</span>
+            <div class="project-radio-group" id="projectTypeGroup">
+                <label><input type="radio" name="projectType" value="residential"> 🏠 Residential Only</label>
+                <label><input type="radio" name="projectType" value="commercial"> 🏢 Commercial Only</label>
+                <label><input type="radio" name="projectType" value="mixed" checked> 🏙️ Mixed-Use</label>
+                <label><input type="radio" name="projectType" value="industrial"> 🏭 Industrial / Warehouse</label>
+            </div>
+        </div>
+
+        <div class="project-meta" aria-label="Project information">
+            <div class="field"><label for="projectNameInput">Project name</label><input id="projectNameInput" type="text" placeholder="e.g. Proposed Mixed-Use Development"></div>
+            <div class="field"><label for="projectRefInput">Project reference</label><input id="projectRefInput" type="text" placeholder="e.g. VVT-2026-001"></div>
+            <div class="field"><label for="preparedByInput">Prepared by</label><input id="preparedByInput" type="text" placeholder="Name / organisation"></div>
+        </div>
+
+        <!-- FOLDER SAVE STATUS -->
+        <div class="folder-status" id="folderStatus">
+            <span>📁 Save Location:</span>
+            <span id="folderPathDisplay" class="folder-path">Not selected</span>
+        </div>
+
+        <!-- Page Size Selector -->
+        <div class="page-size-selector" style="margin-bottom:1.5rem;">
+            <label>📄 PDF Page Size:</label>
+            <select id="pageSizeSelect">
+                <option value="a4">A4 (210 × 297 mm) — Standard</option>
+                <option value="a3">A3 (297 × 420 mm) — Large Format</option>
+            </select>
+            <span style="font-size:0.8rem;color:#5a6e7c;">Select page size for PDF report</span>
+        </div>
+
+        <div class="verified-source">
+            <strong>✓ Regulatory basis independently checked</strong><br>
+            Embedded baseline verified against NEA <a id="officialSourceLink" href="https://www.nea.gov.sg/docs/default-source/resource/practices-/copeh-2025.pdf" target="_blank" rel="noopener">Code of Practice on Environmental Health</a>. On every opening, this page automatically loads the latest successfully extracted and validated standards manifest produced from the official NEA PDF.
+            <br><span id="liveStandardsStatus" class="live-standard-status" role="status" aria-live="polite">⏳ Checking live standards…</span>
+            <details class="standards-audit"><summary>Automatic update audit</summary><pre id="standardsAuditLog">Waiting for standards.json…</pre></details>
+            <br>Category mapping remains a QP classification assumption and must be reviewed project-by-project.
+        </div>
+
+        <div class="section-title" id="rateSectionTitle">📋 Refuse Output Rates (COPEH 2025, Section 1.2(a))</div>
+        <table class="ref-table">
+            <thead>
+                <tr><th>Category</th><th>Rate</th></tr>
+            </thead>
+            <tbody id="rateTableBody">
+                <!-- Populated from NEA data -->
+            </tbody>
+        </table>
+
+        <div class="input-area">
+            <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; margin-bottom: 1rem;">
+                <h3 style="margin: 0;">🏢 Premises Breakdown</h3>
+                <span style="font-size:0.8rem;">💡 Type a space → Category suggestion; QP to verify classification</span>
+            </div>
+            <table class="dynamic-rows">
+                <thead>
+                    <tr><th>Space Type</th><th>NEA Category</th><th>Area (sqm) / Units</th><th>Daily Output (L)</th><th></th></tr>
+                </thead>
+                <tbody id="tableBody"></tbody>
+            </table>
+            <div class="button-group" style="justify-content: flex-start; margin-top: 1rem;">
+                <button type="button" id="addRowBtn" class="btn btn-secondary">+ Add Premises</button>
+                <button type="button" id="resetDefaultBtn" style="background:#6c757d; color:white;" class="btn">Reset Default</button>
+                <button type="button" id="saveDraftBtn" class="btn btn-secondary">Save Draft JSON</button>
+                <button type="button" id="loadDraftBtn" class="btn" style="background:#e3eaf0;color:#17364c;">Load Draft</button>
+                <input id="loadDraftInput" type="file" accept="application/json,.json" hidden>
+                <span class="autosave-status" id="autosaveStatus" role="status" aria-live="polite">Draft autosave ready</span>
+            </div>
+        </div>
+
+        <!-- Summary Cards -->
+        <div class="total-card">
+            <div><strong>📦 Total Refuse Output</strong><br><span class="total-number" id="totalLitres">0</span> <span>litres/day</span></div>
+            <div><strong>🛍️ 20L Bags/Day</strong><br><span class="bag-count" id="bagCount">0</span></div>
+            <div><strong>🗑️ 660L Bins — 2-Day Storage</strong><br><span id="bin660Count" style="font-size:1.5rem; font-weight:700;">0</span></div>
+        </div>
+
+        <div class="compliance-strip" aria-label="Compliance summary">
+            <div class="compliance-item"><span>Collection provision</span><strong id="collectionStatus">—</strong></div>
+            <div class="compliance-item"><span>2-day capacity</span><strong id="capacityStatus">—</strong></div>
+            <div class="compliance-item"><span>Residential trigger</span><strong id="residentialStatus">—</strong></div>
+            <div class="compliance-item"><span>Calculation state</span><strong id="calculationStatus">Ready</strong></div>
+        </div>
+
+        <!-- Comprehensive NEA Advisory Panel -->
+        <div class="recommendation-panel" id="recommendationPanel">
+            <div class="recommendation-title">⚙️ NEA Mandatory Waste Infrastructure Assessment</div>
+            <div id="advisoryDetails" style="line-height: 1.5;"></div>
+        </div>
+
+        <div id="systemSpecificPanel" class="system-card">
+            <div class="system-title">🏗️ Recommended Waste Collection System</div>
+            <div id="systemRecommendation" style="font-size:0.95rem;"></div>
+        </div>
+
+        <div class="residential-note" id="projectTypeSection">
+            <strong>📌 Project-Specific Requirements:</strong><br>
+            <span id="projectTypeAdvice">Select a project type above to see tailored NEA requirements.</span>
+        </div>
+
+        <div style="background: #eef2fa; border-radius: 20px; padding: 1rem 1.5rem; margin: 1rem 0;">
+            <p style="margin: 0.25rem 0;"><strong>📌 Mandatory Storage Capacity (Section 1.4 & 1.6):</strong><br>
+            ✅ Combined storage must hold at least <strong>2 days</strong> of refuse output.<br>
+            📍 Daily output: <strong id="dailyOutputRefSpan">0</strong> L → Required 2‑day capacity = <strong id="twoDayStorageSpan">0</strong> litres.<br>
+            🧮 Equivalent <strong id="equivBins660">0</strong> x 660L bins.</p>
+        </div>
+
+        <div class="notice"><strong>Professional-use note:</strong> Arithmetic and cited COPEH 2025 clauses have been checked. The tool cannot determine land title, URA application date, building height, DPWCS location, actual refuse composition, or NEA project-specific directions. Confirm those inputs and the selected premises category before submission.</div>
+
+        <div class="button-group">
+            <button id="folderSaveBtn" class="btn btn-folder">📁 Select Folder & Save</button>
+            <button id="exportExcelBtn" class="btn btn-excel">📎 Excel Report</button>
+            <button id="exportWordBtn" class="btn btn-word">📄 Word Report</button>
+            <button id="exportPdfBtn" class="btn btn-pdf">📕 Print / PDF</button>
+        </div>
+
+        <div class="footnote">
+            ⚡ Based on NEA COPEH 2025. “Space Type” is a free-text field that suggests a category from keywords; the QP remains responsible for confirming the applicable Section 1.2 category.<br>
+            Bin centre required where output exceeds 1,000 L/day. At 4,000 L/day or more, provide an enclosed RORO, dust-screw or rotary-drum system. PWCS applies conditionally to qualifying new strata-titled properties with ≥500 residential dwelling units.<br>
+            📁 Folder Save: Click "Select Folder & Save" to choose a folder. All calculation data will be saved as a timestamped JSON file.<br>
+            📄 PDF Report: Choose A4 or A3 page size above. Report includes all calculations, NEA compliance checks, and professional formatting.<br>
+            <span style="display:block; margin-top:0.75rem; font-weight:500; color:#1a2c3e;">© VivATA Pte Ltd · Created by VivATA · All rights reserved.</span>
+        </div>
+    </div>
+</div>
+
+<script>
+    (function() {
+        // ============================================================
+        // VERSION & UPDATE CONFIG
+        // ============================================================
+        const APP_VERSION = '4.3.0';
+        const STATE_KEY = 'vivata_nea_waste_advisor_v4';
+        // For live updates, we check a JSON file that you can host.
+        // Example: https://your-server.com/nea-copeh-standards.json
+        const OFFICIAL_COPEH_URL = 'https://www.nea.gov.sg/docs/default-source/resource/practices-/copeh-2025.pdf';
+        const STANDARDS_MANIFEST_URL = './standards.json';
+        const LIVE_STANDARDS_CACHE_KEY = 'vivata_nea_live_standards_v1';
+
+        let pendingUpdate = null;
+        let standardsData = null;
+
+        let RULES = {
+            binCentreAboveLitresPerDay: 1000,
+            enclosedSystemAtOrAboveLitresPerDay: 4000,
+            storageDays: 2,
+            wheeledBinCapacityLitres: 660,
+            pwcsResidentialUnits: 500,
+            recyclablesFraction: 0.30,
+            recyclablesMinimumLitresPerDay: 240,
+            largeFoodManufacturerOperationAreaSqm: 750,
+            residentialChuteStoreysAbove: 4,
+            pwcsUraApplicationFrom: '2018-04-01',
+            recyclablesChuteUraApplicationFrom: '2018-04-01',
+            foodWasteUraApplicationFrom: '2021-01-01'
+        };
+
+        // ============================================================
+        // NEA DATA - Default rates from COPEH 2025
+        // ============================================================
+        const NEA_DATA = {
+            rates: {
+                "Office / Classroom": { rate: 15, unitType: "area", label: "L per 100 sqm GFA" },
+                "Hotel / Dormitory / Store / Industrial": { rate: 10, unitType: "area", label: "L per 100 sqm GFA" },
+                "Retail Shop / Trade Premises": { rate: 30, unitType: "area", label: "L per 100 sqm GFA" },
+                "Supermarket / Market / Department Store": { rate: 100, unitType: "area", label: "L per 100 sqm GFA" },
+                "Restaurant / Eating House / Food Centre / Canteen / Pantry / Food Shop / Food Processing Establishment": { rate: 200, unitType: "area", label: "L per 100 sqm GFA" },
+                "Residential Premises": { rate: 20, unitType: "units", label: "L per dwelling premises" },
+                "Petrol Station": { rate: 300, unitType: "units", label: "L per premises" }
+            },
+            version: "COPEH 2025",
+            lastUpdated: "2025-01-01"
+        };
+
+        // Expanded category mapping for auto-detection
+        const CATEGORY_MAP = {
+            "Office / Classroom": { keywords: ["office", "classroom", "school", "education", "lecture", "training", "tuition", "library", "museum", "gallery", "exhibition", "community", "club", "cc", "senior", "active aging", "childcare", "kindergarten", "preschool", "nursery", "place of worship", "church", "mosque", "temple"] },
+            "Hotel / Dormitory / Store / Industrial": { keywords: ["hotel", "guest house", "hostel", "dormitory", "lodging", "store", "warehouse", "industrial", "factory", "logistics", "manufacturing"] },
+            "Retail Shop / Trade Premises": { keywords: ["retail", "shop", "boutique", "showroom", "trade", "clinic", "medical", "healthcare", "doctor", "dental", "polyclinic", "gym", "fitness", "sports", "swimming", "recreation", "cinema", "theatre", "auditorium"] },
+            "Supermarket / Market / Department Store": { keywords: ["supermarket", "grocery", "market", "department store", "mall"] },
+            "Restaurant / Eating House / Food Centre / Canteen / Pantry / Food Shop / Food Processing Establishment": { keywords: ["restaurant", "cafe", "food court", "hawker", "canteen", "pantry", "eating house", "food shop", "bakery", "kitchen", "food processing"] },
+            "Residential Premises": { keywords: ["residential", "apartment", "condo", "hdb", "dwelling", "house"] },
+            "Petrol Station": { keywords: ["petrol station", "gas station", "fuel station", "service station"] }
+        };
+
+        const CATEGORY_ALIASES = {
+            "Restaurant / Eating House / Food Centre / Food Shop": "Restaurant / Eating House / Food Centre / Canteen / Pantry / Food Shop / Food Processing Establishment"
+        };
+
+        // Runtime constants (can be updated via standards fetch)
+        let CONSTANTS = {
+            CODE_STANDARD: "NEA COPEH 2025",
+            REFERENCE_URL: OFFICIAL_COPEH_URL,
+            REFERENCE_EXCERPT: "Official NEA Code of Practice on Environmental Health, 2025 Edition; verified Sections 1.2–1.7, 1.10 and 6.2–6.4."
+        };
+
+        let currentRates = { ...NEA_DATA.rates };
+        let currentRows = [];
+        let defaultRows = [
+            { spaceType: "Restaurant", category: "Restaurant / Eating House / Food Centre / Canteen / Pantry / Food Shop / Food Processing Establishment", areaValue: 50.1 },
+            { spaceType: "Retail Shop", category: "Retail Shop / Trade Premises", areaValue: 100 },
+            { spaceType: "Residential Premises", category: "Residential Premises", areaValue: 12 }
+        ];
+        let currentProjectType = "mixed";
+        let selectedFolderHandle = null;
+        let folderPathDisplay = "Not selected";
+        let pageSize = "a4";
+        let projectMeta = { projectName: '', projectRef: '', preparedBy: '' };
+
+        // ============================================================
+        // DOM REFS
+        // ============================================================
+        const versionBadge = document.getElementById('versionBadge');
+        const loadingIndicator = document.getElementById('loadingIndicator');
+        const updateNotification = document.getElementById('updateNotification');
+        const applyUpdateBtn = document.getElementById('applyUpdateBtn');
+        const dismissUpdateBtn = document.getElementById('dismissUpdateBtn');
+
+        // ============================================================
+        // VERSION CHECK & STANDARDS FETCH
+        // ============================================================
+        async function fetchLatestStandards() {
+            const indicator = loadingIndicator;
+            indicator.classList.add('active');
+            indicator.textContent = '🔄 Fetching latest NEA COPEH standards...';
+
+            try {
+                // Try to fetch from the standards JSON endpoint
+                const response = await fetch(STANDARDS_URL, {
+                    cache: 'no-cache',
+                    headers: { 'Accept': 'application/json' }
+                });
+
+                if (!response.ok) throw new Error('Failed to fetch standards');
+
+                const data = await response.json();
+                standardsData = data;
+
+                // Check if we have a newer version
+                if (data.version && normalizeVersion(data.version) !== normalizeVersion(APP_VERSION)) {
+                    pendingUpdate = data;
+                    updateNotification.classList.add('show');
+                    updateNotification.querySelector('strong').textContent =
+                        `New version ${data.version} available! (Based on official NEA COPEH standards)`;
+                    versionBadge.textContent = `v${APP_VERSION} (update available)`;
+                    versionBadge.style.background = '#ffc107';
+                    versionBadge.style.color = '#1a2c3e';
+                } else {
+                    versionBadge.textContent = `v${APP_VERSION}`;
+                    versionBadge.style.background = '#1e4668';
+                    versionBadge.style.color = 'white';
+                    indicator.textContent = '✅ Using latest NEA COPEH standards (verified)';
+                }
+
+                // Update constants if provided
+                if (data.constants) {
+                    Object.assign(CONSTANTS, data.constants);
+                    updateReferenceDisplay();
+                }
+
+                // Update rates if provided
+                if (data.rates) {
+                    currentRates = { ...data.rates };
+                    renderRateTable();
+                    // Update category dropdowns in existing rows
+                    const selects = document.querySelectorAll('.category-select');
+                    const categories = Object.keys(currentRates).sort();
+                    selects.forEach(select => {
+                        const currentVal = select.value;
+                        select.innerHTML = '';
+                        categories.forEach(cat => {
+                            const opt = document.createElement('option');
+                            opt.value = cat;
+                            opt.textContent = cat;
+                            if (cat === currentVal) opt.selected = true;
+                            select.appendChild(opt);
+                        });
+                    });
+                    renderTable();
+                    updateAllCalculations();
+                }
+
+                // Update default appliances if provided
+                if (data.defaultPremises) {
+                    // Only update if user hasn't modified
+                    if (currentRows.length === defaultRows.length &&
+                        currentRows.every((r, i) => r.spaceType === defaultRows[i].spaceType &&
+                            r.category === defaultRows[i].category &&
+                            r.areaValue === defaultRows[i].areaValue)) {
+                        currentRows = data.defaultPremises.map(r => ({ ...r }));
+                        defaultRows = data.defaultPremises.map(r => ({ ...r }));
+                        renderTable();
+                        updateAllCalculations();
+                    }
+                }
+
+                // Store in cache
+                localStorage.setItem('nea_copeh_standards', JSON.stringify({
+                    data: data,
+                    timestamp: Date.now()
+                }));
+
+                indicator.classList.remove('active');
+                return data;
+
+            } catch (error) {
+                console.warn('Could not fetch latest standards from server:', error);
+                // Try to use cached data
+                try {
+                    const cached = localStorage.getItem('nea_copeh_standards');
+                    if (cached) {
+                        const parsed = JSON.parse(cached);
+                        if (parsed.data) {
+                            standardsData = parsed.data;
+                            if (parsed.data.constants) {
+                                Object.assign(CONSTANTS, parsed.data.constants);
+                            }
+                            if (parsed.data.rates) {
+                                currentRates = { ...parsed.data.rates };
+                                renderRateTable();
+                                renderTable();
+                                updateAllCalculations();
+                            }
+                            indicator.textContent = 'ℹ️ Using cached NEA COPEH standards (offline mode)';
+                            setTimeout(() => {
+                                indicator.classList.remove('active');
+                            }, 1500);
+                            return;
+                        }
+                    }
+                } catch (e) {
+                    // Silent fail for cache
+                }
+                indicator.textContent = 'ℹ️ Using default NEA COPEH standards (offline mode)';
+                setTimeout(() => {
+                    indicator.classList.remove('active');
+                }, 1500);
+                return null;
+            }
+        }
+
+        function updateReferenceDisplay() {
+            const refContent = document.getElementById('refContent');
+            if (refContent) {
+                // Update reference section if it exists
+                const refTitle = document.querySelector('.reference-section .ref-title');
+                if (refTitle) {
+                    refTitle.textContent = `📚 ${CONSTANTS.CODE_STANDARD || 'NEA COPEH'} Reference`;
+                }
+            }
+        }
+
+        function applyStandardsUpdate() {
+            if (!pendingUpdate) return;
+
+            if (pendingUpdate.constants) {
+                Object.assign(CONSTANTS, pendingUpdate.constants);
+                updateReferenceDisplay();
+            }
+
+            if (pendingUpdate.rates) {
+                currentRates = { ...pendingUpdate.rates };
+                renderRateTable();
+                // Update category dropdowns
+                const selects = document.querySelectorAll('.category-select');
+                const categories = Object.keys(currentRates).sort();
+                selects.forEach(select => {
+                    const currentVal = select.value;
+                    select.innerHTML = '';
+                    categories.forEach(cat => {
+                        const opt = document.createElement('option');
+                        opt.value = cat;
+                        opt.textContent = cat;
+                        if (cat === currentVal) opt.selected = true;
+                        select.appendChild(opt);
+                    });
+                });
+                renderTable();
+                updateAllCalculations();
+            }
+
+            if (pendingUpdate.defaultPremises) {
+                currentRows = pendingUpdate.defaultPremises.map(r => ({ ...r }));
+                defaultRows = pendingUpdate.defaultPremises.map(r => ({ ...r }));
+                renderTable();
+                updateAllCalculations();
+            }
+
+            updateNotification.classList.remove('show');
+            versionBadge.textContent = `v${pendingUpdate.version || APP_VERSION}`;
+            versionBadge.style.background = '#1f6e43';
+            versionBadge.style.color = 'white';
+            pendingUpdate = null;
+        }
+
+        function escapeHTML(value) {
+            return String(value ?? '').replace(/[&<>'"]/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'})[ch]);
+        }
+        function normalizeVersion(value) { return String(value || '').trim().replace(/^v/i, ''); }
+        function persistState(showStatus = true) {
+            localStorage.setItem(STATE_KEY, JSON.stringify({version:4, projectType:currentProjectType, pageSize, projectMeta, rows:currentRows}));
+            if (showStatus) { const el=document.getElementById('autosaveStatus'); if(el) el.textContent=`Autosaved ${new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}`; }
+        }
+        function restoreState() {
+            try {
+                const raw=localStorage.getItem(STATE_KEY); if(!raw) return false;
+                const state=JSON.parse(raw); if(!Array.isArray(state.rows)||!state.rows.length) return false;
+                currentRows=state.rows.map(r=>({spaceType:String(r.spaceType||''),category:CATEGORY_ALIASES[String(r.category||'')] || String(r.category||''),areaValue:Math.max(0,Number(r.areaValue)||0)}));
+                currentProjectType=['residential','commercial','mixed','industrial'].includes(state.projectType)?state.projectType:'mixed';
+                pageSize=state.pageSize==='a3'?'a3':'a4'; projectMeta={projectName:'',projectRef:'',preparedBy:'',...(state.projectMeta||{})}; return true;
+            } catch(error) { console.warn('Saved draft could not be restored:',error); return false; }
+        }
+        function downloadDraft() {
+            const payload={schema:'vivata-nea-waste-advisor-v4',savedAt:new Date().toISOString(),...getReportData(),rows:currentRows};
+            const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'}); const a=document.createElement('a');
+            a.href=URL.createObjectURL(blob); a.download=`NEA_Waste_Draft_${new Date().toISOString().slice(0,10)}.json`; a.click();
+            setTimeout(()=>URL.revokeObjectURL(a.href),1000); persistState();
+        }
+        async function loadDraftFile(file) {
+            try {
+                const data=JSON.parse(await file.text()); const rows=data.rows||data.premisesBreakdown;
+                if(!Array.isArray(rows)||!rows.length) throw new Error('No premises rows found');
+                currentRows=rows.map(r=>{
+                    const migratedCategory = CATEGORY_ALIASES[String(r.category || '')] || String(r.category || '');
+                    return {spaceType:String(r.spaceType||''),category:currentRates[migratedCategory]?migratedCategory:'Retail Shop / Trade Premises',areaValue:Math.max(0,Number(r.areaValue)||0)};
+                });
+                currentProjectType=['residential','commercial','mixed','industrial'].includes(data.projectType)?data.projectType:currentProjectType;
+                projectMeta={projectName:'',projectRef:'',preparedBy:'',...(data.projectMeta||{})}; hydrateControls(); renderTable(); persistState();
+            } catch(error) { alert(`Could not load draft: ${error.message}`); }
+        }
+        function hydrateControls() {
+            const radio=document.querySelector(`input[name="projectType"][value="${currentProjectType}"]`); if(radio) radio.checked=true;
+            document.getElementById('pageSizeSelect').value=pageSize;
+            document.getElementById('projectNameInput').value=projectMeta.projectName||'';
+            document.getElementById('projectRefInput').value=projectMeta.projectRef||'';
+            document.getElementById('preparedByInput').value=projectMeta.preparedBy||'';
+        }
+
+        function validateLiveStandards(data) {
+            if (!data || data.schemaVersion !== 1) throw new Error('Unsupported standards manifest schema');
+            if (!data.code || !data.rates || !data.rules || !data.extraction) throw new Error('Incomplete standards manifest');
+            const source = new URL(data.code.sourceUrl);
+            if (source.protocol !== 'https:' || source.hostname !== 'www.nea.gov.sg') throw new Error('Source is not the official NEA HTTPS domain');
+            if (!/^([a-f0-9]{64})$/i.test(data.code.pdfSha256 || '')) throw new Error('Invalid official PDF checksum');
+
+            const baselineCategories = Object.keys(NEA_DATA.rates);
+            for (const category of baselineCategories) {
+                const item = data.rates[category];
+                if (!item) throw new Error(`Missing required category: ${category}`);
+                if (!Number.isFinite(item.rate) || item.rate <= 0 || item.rate > 5000) throw new Error(`Invalid rate for ${category}`);
+                if (!['area', 'units'].includes(item.unitType)) throw new Error(`Invalid unit type for ${category}`);
+                if (typeof item.label !== 'string' || !item.label.trim()) throw new Error(`Missing rate label for ${category}`);
+            }
+
+            const numericRules = [
+                'binCentreAboveLitresPerDay', 'enclosedSystemAtOrAboveLitresPerDay',
+                'storageDays', 'wheeledBinCapacityLitres', 'pwcsResidentialUnits',
+                'recyclablesFraction', 'recyclablesMinimumLitresPerDay',
+                'largeFoodManufacturerOperationAreaSqm', 'residentialChuteStoreysAbove'
+            ];
+            numericRules.forEach(key => {
+                if (!Number.isFinite(data.rules[key]) || data.rules[key] <= 0) throw new Error(`Invalid rule: ${key}`);
+            });
+            if (data.rules.binCentreAboveLitresPerDay >= data.rules.enclosedSystemAtOrAboveLitresPerDay) throw new Error('Infrastructure thresholds are inconsistent');
+            if (data.extraction.status !== 'validated') throw new Error('Extractor did not mark this manifest validated');
+            return data;
+        }
+
+        function applyLiveStandards(data, sourceMode) {
+            const previousRates = currentRates;
+            const previousRules = { ...RULES };
+            currentRates = Object.fromEntries(Object.entries(data.rates).map(([category, item]) => [category, {
+                rate: Number(item.rate), unitType: item.unitType, label: item.label
+            }]));
+            RULES = { ...RULES, ...data.rules };
+            standardsData = data;
+
+            const rateChanges = Object.keys(currentRates).filter(category =>
+                !previousRates[category] || previousRates[category].rate !== currentRates[category].rate || previousRates[category].unitType !== currentRates[category].unitType
+            ).map(category => `${category}: ${previousRates[category]?.rate ?? 'new'} → ${currentRates[category].rate}`);
+            const ruleChanges = Object.keys(data.rules).filter(key => previousRules[key] !== data.rules[key])
+                .map(key => `${key}: ${previousRules[key] ?? 'new'} → ${data.rules[key]}`);
+
+            renderRateTable();
+            renderTable();
+            updateAllCalculations();
+            document.getElementById('rateSectionTitle').textContent = `📋 Refuse Output Rates (${data.code.title}, ${data.code.edition}, Section 1.2(a))`;
+            const officialLink = document.getElementById('officialSourceLink');
+            officialLink.href = data.code.sourceUrl;
+            officialLink.textContent = `${data.code.title}, ${data.code.edition}`;
+            versionBadge.textContent = `v${APP_VERSION} · ${data.code.edition}`;
+
+            const status = document.getElementById('liveStandardsStatus');
+            status.className = 'live-standard-status';
+            status.textContent = `✓ ${data.code.edition} loaded automatically (${sourceMode})`;
+            document.getElementById('standardsAuditLog').textContent = [
+                `Source: ${data.code.sourceUrl}`,
+                `PDF SHA-256: ${data.code.pdfSha256}`,
+                `PDF fetched: ${data.code.fetchedAt}`,
+                `Manifest generated: ${data.generatedAt}`,
+                `Extractor: ${data.extraction.engine}`,
+                `Validation: ${data.extraction.status}`,
+                `Rate changes from embedded baseline: ${rateChanges.length ? '\n- ' + rateChanges.join('\n- ') : 'none'}`,
+                `Rule changes from embedded baseline: ${ruleChanges.length ? '\n- ' + ruleChanges.join('\n- ') : 'none'}`
+            ].join('\n');
+        }
+
+        async function loadAutomaticStandards() {
+            const status = document.getElementById('liveStandardsStatus');
+            try {
+                const response = await fetch(`${STANDARDS_MANIFEST_URL}?t=${Date.now()}`, { cache: 'no-store', headers: { Accept: 'application/json' } });
+                if (!response.ok) throw new Error(`standards.json returned HTTP ${response.status}`);
+                const data = validateLiveStandards(await response.json());
+                localStorage.setItem(LIVE_STANDARDS_CACHE_KEY, JSON.stringify(data));
+                applyLiveStandards(data, 'live manifest');
+                return;
+            } catch (liveError) {
+                try {
+                    const cached = localStorage.getItem(LIVE_STANDARDS_CACHE_KEY);
+                    if (!cached) throw new Error('No last-known-good manifest is cached');
+                    const data = validateLiveStandards(JSON.parse(cached));
+                    applyLiveStandards(data, 'cached last-known-good');
+                    status.classList.add('warning');
+                    status.textContent = `⚠ Live check failed; using cached ${data.code.edition}`;
+                    document.getElementById('standardsAuditLog').textContent += `\nLive-check error: ${liveError.message}`;
+                    return;
+                } catch (cacheError) {
+                    status.className = 'live-standard-status error';
+                    status.textContent = '⚠ Live check unavailable; using embedded verified baseline';
+                    document.getElementById('standardsAuditLog').textContent = `Live-check error: ${liveError.message}\nCache fallback: ${cacheError.message}\nEmbedded baseline retained.`;
+                }
+            }
+        }
+
+        // ============================================================
+        // RATE TABLE RENDER
+        // ============================================================
+        function renderRateTable() {
+            const tbody = document.getElementById('rateTableBody');
+            tbody.innerHTML = '';
+            for (const [category, data] of Object.entries(currentRates)) {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `<td data-label="Category">${category}</td><td data-label="Rate">${data.rate} ${data.label}</td>`;
+                tbody.appendChild(tr);
+            }
+        }
+
+        // ============================================================
+        // MAPPING FUNCTION
+        // ============================================================
+        function mapSpaceToCategory(spaceText) {
+            if (!spaceText || spaceText.trim() === '') return null;
+            const lower = spaceText.toLowerCase();
+            for (const [category, info] of Object.entries(CATEGORY_MAP)) {
+                for (const keyword of info.keywords) {
+                    if (lower.includes(keyword)) return category;
+                }
+            }
+            return null;
+        }
+
+        // ============================================================
+        // CALCULATION FUNCTIONS
+        // ============================================================
+        function computeDailyLitres(row) {
+            const rateInfo = currentRates[row.category];
+            if (!rateInfo) return 0;
+            const val = Math.max(0, parseFloat(row.areaValue) || 0);
+            if (rateInfo.unitType === 'area') return (rateInfo.rate * val) / 100;
+            if (rateInfo.unitType === 'units') return rateInfo.rate * val;
+            return 0;
+        }
+
+        function getTotalLitres() {
+            return currentRows.reduce((sum, row) => sum + computeDailyLitres(row), 0);
+        }
+
+        function getTotalResidentialUnits() {
+            return currentRows.filter(r => r.category === 'Residential Premises')
+                .reduce((sum, r) => sum + Math.max(0, parseFloat(r.areaValue) || 0), 0);
+        }
+
+        function getReportData() {
+            const total = getTotalLitres();
+            const resUnits = getTotalResidentialUnits();
+            return {
+                generatedDate: new Date().toLocaleString(),
+                projectType: currentProjectType,
+                projectMeta: { ...projectMeta },
+                totalDailyLitres: total,
+                twentyLitresBags: Math.ceil(total / 20),
+                dailyEquivalentBins660: total <= 0 ? 0 : Math.ceil(total / RULES.wheeledBinCapacityLitres),
+                bins660Required: total <= 0 ? 0 : Math.ceil((total * RULES.storageDays) / RULES.wheeledBinCapacityLitres),
+                twoDayStorage: total * RULES.storageDays,
+                residentialUnits: resUnits,
+                advisory: document.getElementById('advisoryDetails')?.innerHTML || '',
+                systemRec: document.getElementById('systemRecommendation')?.innerHTML || '',
+                projectAdvice: document.getElementById('projectTypeAdvice')?.innerHTML || '',
+                neaVersion: CONSTANTS.CODE_STANDARD || NEA_DATA.version,
+                premisesBreakdown: currentRows.map(r => ({
+                    spaceType: r.spaceType || 'Manual Entry',
+                    category: r.category,
+                    areaValue: r.areaValue,
+                    dailyOutput: computeDailyLitres(r)
+                }))
+            };
+        }
+
+        // ============================================================
+        // UPDATE UI
+        // ============================================================
+        function updateAllCalculations() {
+            const totalLitres = Math.max(0, getTotalLitres());
+            const totalRounded = Math.round(totalLitres * 10) / 10;
+            const twoDayLitres = totalLitres * RULES.storageDays;
+            const dailyEquivalentBins660 = totalLitres <= 0 ? 0 : Math.ceil(totalLitres / RULES.wheeledBinCapacityLitres);
+            const storageBins660 = totalLitres <= 0 ? 0 : Math.ceil(twoDayLitres / RULES.wheeledBinCapacityLitres);
+
+            document.getElementById('totalLitres').textContent = totalRounded;
+            document.getElementById('bagCount').textContent = totalLitres <= 0 ? 0 : Math.ceil(totalLitres / 20);
+            document.getElementById('bin660Count').textContent = storageBins660;
+            document.getElementById('dailyOutputRefSpan').textContent = totalRounded;
+            document.getElementById('twoDayStorageSpan').textContent = twoDayLitres.toFixed(1) + ' L';
+            document.getElementById('equivBins660').textContent = storageBins660;
+
+            const residentialUnits = getTotalResidentialUnits();
+            const hasRes = residentialUnits > 0;
+            document.getElementById('collectionStatus').textContent = totalLitres >= RULES.enclosedSystemAtOrAboveLitresPerDay ? 'Enclosed system' : (totalLitres > RULES.binCentreAboveLitresPerDay ? 'Bin centre' : 'Bin point');
+            document.getElementById('capacityStatus').textContent = `${storageBins660} × 660L`;
+            document.getElementById('residentialStatus').textContent = residentialUnits >= RULES.pwcsResidentialUnits ? 'Check PWCS conditions' : (hasRes ? `${residentialUnits} dwelling premises` : 'Not applicable');
+            document.getElementById('calculationStatus').textContent = totalLitres > 0 ? 'Calculated' : 'Add quantities';
+
+            let advisoryHtml = '';
+            let systemHtml = '';
+
+            if (totalLitres >= RULES.enclosedSystemAtOrAboveLitresPerDay) {
+                advisoryHtml = `<strong style="color:#b85c00;">🚛 HIGH VOLUME (≥${RULES.enclosedSystemAtOrAboveLitresPerDay.toLocaleString()} L/day)</strong><br>➜ <strong>An enclosed RORO compactor/container, dust-screw compactor or rotary-drum system is required</strong> under Section 1.6(j); system selection depends on refuse composition and output.<br>➜ Additional provisions include a 4 m clear-width × 5 m clear-height roller-shutter opening, 5 m clear height in front, at least 13 m setback and 9 m minimum vehicle turning radius.<br>➜ ${RULES.storageDays}-day storage basis: ${twoDayLitres.toFixed(1)} L.<br>`;
+                systemHtml = `🏭 <strong>Bin centre with a compliant enclosed mechanical storage system</strong> — select RORO, dust-screw or rotary-drum equipment to suit the refuse composition and collection operation.`;
+            } else if (totalLitres > RULES.binCentreAboveLitresPerDay) {
+                advisoryHtml = `<strong style="color:#2c7a4d;">🏢 BIN CENTRE REQUIRED (Section 1.6)</strong><br>➜ Daily output ${totalRounded} L exceeds ${RULES.binCentreAboveLitresPerDay.toLocaleString()} L/day.<br>➜ ${RULES.storageDays}-day storage: ${twoDayLitres.toFixed(1)} L, equivalent to ${storageBins660} × ${RULES.wheeledBinCapacityLitres}L bins. One-day equivalent: ${dailyEquivalentBins660} ${dailyEquivalentBins660 === 1 ? 'bin' : 'bins'}.<br>`;
+                systemHtml = `🏢 <strong>Bin centre with SS EN 840 wheeled bins</strong> — provide collection-vehicle access, bin washing/manoeuvring space, ventilation and pest-proofing, plus at least 1 m clear walkway around all items. The fixed 13 m setback and 9 m turning-radius rules are Section 1.6(j) provisions for haulage systems, not automatic requirements for this volume band.`;
+            } else {
+                advisoryHtml = `<strong style="color:#1f6e43;">✅ BIN POINT PERMITTED (Output ≤${RULES.binCentreAboveLitresPerDay.toLocaleString()} L/day)</strong><br>➜ For a development not adopting a refuse-room system, a bin point may be used; a bin centre remains optional.<br>➜ ${RULES.storageDays}-day storage: ${twoDayLitres.toFixed(1)} L, equivalent to ${storageBins660} × ${RULES.wheeledBinCapacityLitres}L bins. One-day equivalent: ${dailyEquivalentBins660} ${dailyEquivalentBins660 === 1 ? 'bin' : 'bins'}.<br>`;
+                systemHtml = `🗑️ <strong>Bin point, or optional bin centre</strong> — site and design it to avoid nuisance; a bin point should have a pleasant architectural appearance.`;
+            }
+
+            let projectAdvice = '';
+            const residentialConditions = `➜ Refuse chute required where the residential building/component is taller than ${RULES.residentialChuteStoreysAbove} storeys (Section 1.3).<br>➜ Separate recyclables chute applies to qualifying new formal URA development applications from ${RULES.recyclablesChuteUraApplicationFrom} that are taller than ${RULES.residentialChuteStoreysAbove} storeys and require refuse chutes (Section 6.4).<br>`;
+            if (currentProjectType === 'residential' && hasRes) {
+                projectAdvice = `🏠 Residential Development — ${residentialUnits} dwelling premises.<br>${residentialConditions}`;
+                if (residentialUnits >= RULES.pwcsResidentialUnits) projectAdvice += `➜ <strong>Potential PWCS trigger:</strong> Section 1.7 applies to all new strata-titled properties with ≥${RULES.pwcsResidentialUnits} residential dwelling units for qualifying URA applications from ${RULES.pwcsUraApplicationFrom}. Confirm title and application status.<br>`;
+            } else if (currentProjectType === 'commercial') {
+                projectAdvice = `🏢 Commercial Development<br>➜ Apply the bin-point/bin-centre and enclosed-system thresholds shown above. Check separate COPEH provisions applicable to the actual uses; this refuse-output tool does not assess food-shop or grease-trap design.<br>`;
+            } else if (currentProjectType === 'industrial') {
+                projectAdvice = `🏭 Industrial Development<br>➜ Section 1.10 space-allocation requirements apply to qualifying new URA applications from ${RULES.foodWasteUraApplicationFrom}. For a single-user factory, the >${RULES.largeFoodManufacturerOperationAreaSqm} m² trigger concerns an SFA-licensed large food manufacturer’s operation area. Multi-user factories have separate alternative thresholds; verify the full table and exclusions.<br>`;
+            } else if (currentProjectType === 'mixed') {
+                projectAdvice = `🏙️ Mixed-Use Development<br>➜ Residential component entered: ${residentialUnits} dwelling premises.<br>${hasRes ? residentialConditions : '➜ No residential quantity has been entered; residential triggers cannot be assessed.<br>'}`;
+                if (residentialUnits >= RULES.pwcsResidentialUnits) projectAdvice += `➜ <strong>Potential PWCS trigger:</strong> confirm this is a new strata-titled property and the URA application falls on or after ${RULES.pwcsUraApplicationFrom} (Section 1.7).<br>`;
+            }
+
+            if (hasRes) {
+                const recyclablesOutput = Math.max(totalLitres * RULES.recyclablesFraction, RULES.recyclablesMinimumLitresPerDay);
+                advisoryHtml += `<br><strong>♻️ Conditional recyclables calculation:</strong> For a strata-titled property with residential units, Section 6.2(b) gives ${recyclablesOutput.toFixed(0)} L/day (higher of ${(RULES.recyclablesFraction * 100).toFixed(0)}% of Section 1.2 refuse output or ${RULES.recyclablesMinimumLitresPerDay} L/day). Confirm strata-title applicability.`;
+            }
+
+            document.getElementById('advisoryDetails').innerHTML = advisoryHtml;
+            document.getElementById('systemRecommendation').innerHTML = systemHtml;
+            document.getElementById('projectTypeAdvice').innerHTML = projectAdvice;
+
+            const tbody = document.getElementById('tableBody');
+            for (let i = 0; i < currentRows.length; i++) {
+                const daily = computeDailyLitres(currentRows[i]);
+                const tr = tbody.children[i];
+                if (tr) {
+                    const span = tr.querySelector('.daily-litre-val');
+                    if (span) span.textContent = daily.toFixed(1);
+                }
+            }
+        }
+
+        // ============================================================
+        // RENDER TABLE
+        // ============================================================
+        function renderTable() {
+            const tbody = document.getElementById('tableBody');
+            if (!tbody) return;
+            tbody.innerHTML = '';
+
+            for (let i = 0; i < currentRows.length; i++) {
+                const row = currentRows[i];
+                const dailyVal = computeDailyLitres(row);
+                const tr = document.createElement('tr');
+
+                const tdSpace = document.createElement('td');
+                const spaceInput = document.createElement('input');
+                spaceInput.type = 'text';
+                spaceInput.placeholder = 'e.g., Active Aging Centre, Clinic...';
+                spaceInput.value = row.spaceType || '';
+                spaceInput.className = 'space-input';
+                spaceInput.autocomplete = 'off';
+                spaceInput.enterKeyHint = 'next';
+                spaceInput.setAttribute('aria-label', `Space type ${i + 1}`);
+                spaceInput.addEventListener('input', (e) => {
+                    row.spaceType = e.target.value;
+                    const mapped = mapSpaceToCategory(e.target.value);
+                    if (mapped && row.category !== mapped) {
+                        row.category = mapped;
+                        catSelect.value = mapped;
+                        inputArea.placeholder = currentRates[mapped]?.unitType === 'area' ? 'sqm' : 'units';
+                        inputArea.step = currentRates[mapped]?.unitType === 'area' ? 'any' : '1';
+                    }
+                    updateAllCalculations();
+                    persistState();
+                });
+                tdSpace.appendChild(spaceInput);
+
+                const tdCat = document.createElement('td');
+                const catSelect = document.createElement('select');
+                catSelect.className = 'category-select';
+                catSelect.setAttribute('aria-label', `NEA category ${i + 1}`);
+                const categories = Object.keys(currentRates).sort();
+                categories.forEach(cat => {
+                    const opt = document.createElement('option');
+                    opt.value = cat;
+                    opt.textContent = cat;
+                    if (cat === row.category) opt.selected = true;
+                    catSelect.appendChild(opt);
+                });
+                catSelect.addEventListener('change', (e) => {
+                    row.category = e.target.value;
+                    inputArea.placeholder = currentRates[row.category]?.unitType === 'area' ? 'sqm' : 'units';
+                    inputArea.step = currentRates[row.category]?.unitType === 'area' ? 'any' : '1';
+                    updateAllCalculations();
+                    persistState();
+                });
+                tdCat.appendChild(catSelect);
+
+                const tdArea = document.createElement('td');
+                const inputArea = document.createElement('input');
+                inputArea.type = 'number';
+                inputArea.step = currentRates[row.category]?.unitType === 'area' ? 'any' : '1';
+                inputArea.min = '0';
+                inputArea.inputMode = 'decimal';
+                inputArea.setAttribute('aria-label', `Area or units ${i + 1}`);
+                inputArea.value = row.areaValue;
+                const rateInfo = currentRates[row.category];
+                inputArea.placeholder = rateInfo?.unitType === 'area' ? 'sqm' : 'units';
+                inputArea.className = 'area-input';
+                inputArea.addEventListener('input', (e) => {
+                    row.areaValue = Math.max(0, parseFloat(e.target.value) || 0);
+                    updateAllCalculations();
+                    persistState();
+                });
+                tdArea.appendChild(inputArea);
+
+                const tdLitres = document.createElement('td');
+                const litresSpan = document.createElement('span');
+                litresSpan.className = 'output-litres daily-litre-val';
+                litresSpan.textContent = dailyVal.toFixed(1);
+                tdLitres.appendChild(litresSpan);
+
+                const tdRemove = document.createElement('td');
+                const removeBtn = document.createElement('button');
+                removeBtn.textContent = '✖';
+                removeBtn.className = 'remove-btn';
+                removeBtn.setAttribute('aria-label', `Remove premises row ${i + 1}`);
+                removeBtn.addEventListener('click', () => {
+                    if (currentRows.length > 1) {
+                        currentRows.splice(i, 1);
+                        persistState();
+                        renderTable();
+                        updateAllCalculations();
+                    } else {
+                        alert('At least one premises category required.');
+                    }
+                });
+                tdRemove.appendChild(removeBtn);
+
+                tr.appendChild(tdSpace);
+                tr.appendChild(tdCat);
+                tr.appendChild(tdArea);
+                tr.appendChild(tdLitres);
+                tr.appendChild(tdRemove);
+                tdSpace.dataset.label = 'Space type';
+                tdCat.dataset.label = 'NEA category';
+                tdArea.dataset.label = 'Area / units';
+                tdLitres.dataset.label = 'Daily output';
+                tdRemove.dataset.label = 'Remove';
+                tbody.appendChild(tr);
+            }
+            updateAllCalculations();
+        }
+
+        // ============================================================
+        // ROW MANAGEMENT
+        // ============================================================
+        function addNewRow() {
+            currentRows.push({ spaceType: '', category: 'Retail Shop / Trade Premises', areaValue: 0 });
+            persistState();
+            renderTable();
+        }
+
+        function resetToDefault() {
+            currentRows = defaultRows.map(r => ({ ...r, spaceType: r.spaceType || r.category }));
+            persistState();
+            renderTable();
+        }
+
+        // ============================================================
+        // FOLDER SAVE
+        // ============================================================
+        async function saveToFolder() {
+            if (!window.showDirectoryPicker) {
+                alert('Your browser does not support the File System Access API. Please use Chrome, Edge, or Opera.');
+                return;
+            }
+            try {
+                const dirHandle = await window.showDirectoryPicker();
+                selectedFolderHandle = dirHandle;
+                folderPathDisplay = dirHandle.name;
+                document.getElementById('folderPathDisplay').textContent = folderPathDisplay;
+
+                const timestamp = new Date().toISOString().slice(0, 19).replace(/:/g, '-');
+                const filename = `NEA_Refuse_Data_${timestamp}.json`;
+                const data = getReportData();
+                const jsonStr = JSON.stringify(data, null, 2);
+
+                const fileHandle = await dirHandle.getFileHandle(filename, { create: true });
+                const writable = await fileHandle.createWritable();
+                await writable.write(jsonStr);
+                await writable.close();
+
+                const statusDiv = document.getElementById('folderStatus');
+                const msg = document.createElement('div');
+                msg.className = 'success-msg';
+                msg.innerHTML = `✅ Saved to: ${dirHandle.name}/${filename}`;
+                statusDiv.appendChild(msg);
+                setTimeout(() => msg.remove(), 4000);
+
+            } catch (err) {
+                if (err.name !== 'AbortError') {
+                    console.error(err);
+                    alert('Could not save to folder: ' + err.message);
+                }
+            }
+        }
+
+        // ============================================================
+        // EXPORT FUNCTIONS WITH PROPER TABLES
+        // ============================================================
+        function getPremisesTableHTML(includeHeader = true) {
+            const d = getReportData();
+            let html = '';
+            if (includeHeader) {
+                html += `<table border="1" cellpadding="6" cellspacing="0" style="border-collapse:collapse; width:100%; font-size:0.85rem;">
+                    <thead>
+                        <tr style="background:#e9edf2;">
+                            <th style="text-align:left; padding:8px;">Space Type</th>
+                            <th style="text-align:left; padding:8px;">NEA Category</th>
+                            <th style="text-align:right; padding:8px;">Area / Units</th>
+                            <th style="text-align:right; padding:8px;">Daily Output (L)</th>
+                        </tr>
+                    </thead>
+                    <tbody>`;
+            }
+            d.premisesBreakdown.forEach(p => {
+                html += `<tr>
+                    <td style="padding:6px 8px;">${escapeHTML(p.spaceType)}</td>
+                    <td style="padding:6px 8px;">${escapeHTML(p.category)}</td>
+                    <td style="padding:6px 8px; text-align:right;">${p.areaValue}</td>
+                    <td style="padding:6px 8px; text-align:right; font-weight:600;">${p.dailyOutput.toFixed(1)}</td>
+                </tr>`;
+            });
+            if (includeHeader) {
+                html += `</tbody></table>`;
+            }
+            return html;
+        }
+
+        function exportToExcel() {
+            const d = getReportData();
+            const premisesTable = getPremisesTableHTML(true);
+            const html = `
+                <html>
+                    <head><meta charset="UTF-8"><title>NEA Refuse Output Report</title></head>
+                    <body style="font-family: Arial, sans-serif; padding: 20px;">
+                        <h1 style="color: #1e4668;">NEA Refuse Output Report</h1>
+                        <p><strong>Generated:</strong> ${d.generatedDate}</p>
+                        <p><strong>Project:</strong> ${escapeHTML(d.projectMeta.projectName || 'Not stated')}</p>
+                        <p><strong>Reference:</strong> ${escapeHTML(d.projectMeta.projectRef || 'Not stated')}</p>
+                        <p><strong>Prepared by:</strong> ${escapeHTML(d.projectMeta.preparedBy || 'Not stated')}</p>
+                        <p><strong>Project Type:</strong> ${escapeHTML(d.projectType)}</p>
+                        <p><strong>NEA COPEH:</strong> ${d.neaVersion}</p>
+                        <h2>Premises Breakdown</h2>
+                        ${premisesTable}
+                        <h2>Summary</h2>
+                        <p><strong>Total Daily Output:</strong> ${d.totalDailyLitres.toFixed(1)} L/day</p>
+                        <p><strong>20L Bags/Day:</strong> ${d.twentyLitresBags}</p>
+                        <p><strong>660L Bins for 2-day Storage:</strong> ${d.bins660Required}</p>
+                        <p><strong>2-day Storage:</strong> ${d.twoDayStorage.toFixed(1)} L (${Math.ceil(d.twoDayStorage/660)} × 660L bins)</p>
+                        <p><strong>Residential Units:</strong> ${d.residentialUnits}</p>
+                        <h2>NEA Assessment</h2>
+                        <p>${d.advisory.replace(/<br>/g, '<br>')}</p>
+                        <p><strong>Recommended System:</strong> ${d.systemRec.replace(/<br>/g, '<br>')}</p>
+                        <p><strong>Project-Specific:</strong> ${d.projectAdvice.replace(/<br>/g, '<br>')}</p>
+                        <p><em>© VivATA Pte Ltd · Created by VivATA</em></p>
+                    </body>
+                </html>
+            `;
+            const blob = new Blob([html], { type: 'application/vnd.ms-excel' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = `NEA_Refuse_Report_${new Date().toISOString().slice(0,10)}.xls`;
+            a.click();
+            URL.revokeObjectURL(a.href);
+        }
+
+        function exportToWord() {
+            const d = getReportData();
+            const premisesTable = getPremisesTableHTML(true);
+            const html = `
+                <html>
+                    <head><meta charset="UTF-8"><title>NEA Refuse Output Report</title></head>
+                    <body style="font-family: Calibri, Arial, sans-serif; padding: 30px;">
+                        <h1 style="color: #1e4668; border-bottom: 3px solid #1e4668; padding-bottom: 10px;">NEA Refuse Output Report</h1>
+                        <p><strong>Generated:</strong> ${d.generatedDate}</p>
+                        <p><strong>Project:</strong> ${escapeHTML(d.projectMeta.projectName || 'Not stated')}</p>
+                        <p><strong>Reference:</strong> ${escapeHTML(d.projectMeta.projectRef || 'Not stated')}</p>
+                        <p><strong>Prepared by:</strong> ${escapeHTML(d.projectMeta.preparedBy || 'Not stated')}</p>
+                        <p><strong>Project Type:</strong> ${escapeHTML(d.projectType)}</p>
+                        <p><strong>NEA COPEH:</strong> ${d.neaVersion}</p>
+                        <h2 style="border-left: 6px solid #2c7a4d; padding-left: 12px;">Premises Breakdown</h2>
+                        ${premisesTable}
+                        <h2 style="border-left: 6px solid #2c7a4d; padding-left: 12px;">Summary</h2>
+                        <table border="0" cellpadding="6" style="font-size:1rem;">
+                            <tr><td><strong>Total Daily Output:</strong></td><td>${d.totalDailyLitres.toFixed(1)} L/day</td></tr>
+                            <tr><td><strong>20L Bags/Day:</strong></td><td>${d.twentyLitresBags}</td></tr>
+                            <tr><td><strong>660L Bins for 2-day Storage:</strong></td><td>${d.bins660Required}</td></tr>
+                            <tr><td><strong>2-day Storage:</strong></td><td>${d.twoDayStorage.toFixed(1)} L (${Math.ceil(d.twoDayStorage/660)} × 660L bins)</td></tr>
+                            <tr><td><strong>Residential Units:</strong></td><td>${d.residentialUnits}</td></tr>
+                        </table>
+                        <h2 style="border-left: 6px solid #2c7a4d; padding-left: 12px;">NEA Mandatory Assessment</h2>
+                        <div style="background: #fef7e0; padding: 15px; border-left: 6px solid #f5a623; border-radius: 8px;">${d.advisory}</div>
+                        <h3>Recommended System</h3>
+                        <div style="background: #e8f0fe; padding: 15px; border-left: 6px solid #2c5a7a; border-radius: 8px;">${d.systemRec}</div>
+                        <h3>Project-Specific Requirements</h3>
+                        <div style="background: #e6f4ea; padding: 15px; border-radius: 8px;">${d.projectAdvice}</div>
+                        <p style="margin-top:20px; font-size:0.85rem; color:#4a6a7a;">© VivATA Pte Ltd · Created by VivATA · All rights reserved.</p>
+                    </body>
+                </html>
+            `;
+            const blob = new Blob([html], { type: 'application/msword' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = `NEA_Refuse_Report_${new Date().toISOString().slice(0,10)}.doc`;
+            a.click();
+            URL.revokeObjectURL(a.href);
+        }
+
+        // ============================================================
+        // PRINT / PDF - Using native browser print with proper formatting
+        // ============================================================
+        function exportToPDF() {
+            const pageSize = document.getElementById('pageSizeSelect').value;
+            
+            // Set page size via CSS for print
+            let pageSizeCSS = '';
+            if (pageSize === 'a3') {
+                pageSizeCSS = '@page { size: A3 portrait; margin: 0.4in; }';
+            } else {
+                pageSizeCSS = '@page { size: A4 portrait; margin: 0.4in; }';
+            }
+            
+            // Get current data for the report
+            const d = getReportData();
+            const total = d.totalDailyLitres;
+            const totalRounded = Math.round(total * 10) / 10;
+            const twoDay = total * RULES.storageDays;
+            const bins660 = total <= 0 ? 0 : Math.ceil(twoDay / RULES.wheeledBinCapacityLitres);
+            const premisesTable = getPremisesTableHTML(true);
+            
+            // Build the print-friendly content
+            const printContent = document.createElement('div');
+            printContent.id = 'printReportContent';
+            printContent.style.cssText = 'font-family: "Segoe UI", Arial, sans-serif; max-width: 100%; margin: 0 auto; padding: 0.2in; background: white;';
+            printContent.innerHTML = `
+                <style>
+                    ${pageSizeCSS}
+                    body { font-family: "Segoe UI", Arial, sans-serif; }
+                    .print-header { text-align: center; border-bottom: 3px solid #1e4668; padding-bottom: 1rem; margin-bottom: 1.5rem; }
+                    .print-header h1 { color: #1e4668; font-size: 1.8rem; margin: 0; }
+                    .print-header p { color: #4a6a7a; margin: 0.3rem 0; }
+                    .print-header .sub { font-size: 0.85rem; color: #5a6e7c; }
+                    .summary-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
+                    .summary-box { background: #f0f6fa; padding: 1rem; border-radius: 12px; text-align: center; }
+                    .summary-box .label { font-size: 0.8rem; color: #4a6a7a; }
+                    .summary-box .value { font-weight: 700; font-size: 1.1rem; }
+                    .section-heading { color: #1e4668; border-left: 4px solid #2c7a4d; padding-left: 0.8rem; margin: 1.5rem 0 0.8rem 0; font-size: 1.2rem; }
+                    .result-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin: 1.5rem 0; background: #e9f3ec; padding: 1.2rem; border-radius: 12px; }
+                    .result-grid .item { text-align: center; }
+                    .result-grid .item .label { font-size: 0.8rem; color: #1e4668; }
+                    .result-grid .item .big-number { font-size: 2rem; font-weight: 800; color: #1f6e43; }
+                    .result-grid .item .big-number.dark { color: #2c5a7a; }
+                    .advisory-box { background: #fef7e0; border-left: 6px solid #f5a623; padding: 1rem 1.5rem; border-radius: 12px; margin: 1rem 0; }
+                    .system-box { background: #e8f0fe; border-left: 6px solid #2c5a7a; padding: 1rem 1.5rem; border-radius: 12px; margin: 1rem 0; }
+                    .project-box { background: #e6f4ea; padding: 0.8rem 1.2rem; border-radius: 12px; margin: 1rem 0; font-size: 0.9rem; }
+                    .storage-box { background: #eef2fa; padding: 0.8rem 1.2rem; border-radius: 12px; margin: 1rem 0; font-size: 0.9rem; }
+                    .footer-note { margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid #e2edf2; font-size: 0.7rem; color: #6a7e8c; text-align: center; }
+                    table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin-bottom: 1rem; }
+                    table th { background: #e9edf2; padding: 0.6rem; text-align: left; border: 1px solid #d0d8e0; }
+                    table td { padding: 0.5rem 0.6rem; border: 1px solid #d0d8e0; }
+                    table td.right { text-align: right; font-weight: 600; }
+                    @media print { .no-print { display: none !important; } }
+                    .copyright-line { margin-top: 1rem; font-size: 0.75rem; color: #4a6a7a; text-align: center; }
+                </style>
+                
+                <div class="print-header">
+                    <h1>NEA Refuse Output Report</h1>
+                    <p>Based on ${CONSTANTS.CODE_STANDARD || 'COPEH 2025'}</p>
+                    <p class="sub">Generated: ${d.generatedDate}</p>
+                </div>
+
+                <div class="summary-grid">
+                    <div class="summary-box">
+                        <div class="label">Project Type</div>
+                        <div class="value">${d.projectType}</div>
+                    </div>
+                    <div class="summary-box">
+                        <div class="label">NEA Version</div>
+                        <div class="value">${d.neaVersion}</div>
+                    </div>
+                    <div class="summary-box">
+                        <div class="label">Residential Units</div>
+                        <div class="value">${d.residentialUnits}</div>
+                    </div>
+                </div>
+
+                <h2 class="section-heading">Premises Breakdown</h2>
+                ${premisesTable}
+
+                <div class="result-grid">
+                    <div class="item">
+                        <div class="label">Total Daily Output</div>
+                        <div class="big-number">${totalRounded} L</div>
+                    </div>
+                    <div class="item">
+                        <div class="label">20L Bags/Day</div>
+                        <div class="big-number dark" style="background:#2c5a7a; color:white; padding:0.1rem 0.5rem; border-radius:40px; display:inline-block; font-size:1.6rem;">${Math.ceil(total/20)}</div>
+                    </div>
+                    <div class="item">
+                        <div class="label">660L Bins — 2-Day Storage</div>
+                        <div class="big-number dark" style="color:#2c5a7a;">${bins660}</div>
+                    </div>
+                </div>
+
+                <div class="advisory-box">
+                    <h3 style="color: #b85c00; margin: 0 0 0.5rem 0;">NEA Mandatory Infrastructure Assessment</h3>
+                    <div style="font-size: 0.9rem; line-height: 1.6;">${d.advisory}</div>
+                </div>
+
+                <div class="system-box">
+                    <h3 style="color: #1e4668; margin: 0 0 0.5rem 0;">Recommended Waste Collection System</h3>
+                    <div style="font-size: 0.9rem;">${d.systemRec}</div>
+                </div>
+
+                <div class="project-box">
+                    <strong>Project-Specific Requirements:</strong><br>
+                    ${d.projectAdvice}
+                </div>
+
+                <div class="storage-box">
+                    <strong>Mandatory Storage Capacity:</strong><br>
+                    Daily output: ${totalRounded} L → 2-day storage: ${twoDay.toFixed(1)} L → ${Math.ceil(twoDay/660)} × 660L bins
+                </div>
+
+                <div class="footer-note">
+                    Generated by NEA Refuse Output &amp; Waste System Advisor · ${CONSTANTS.CODE_STANDARD || 'COPEH 2025'} Compliant
+                    <div class="copyright-line">© VivATA Pte Ltd · Created by VivATA · All rights reserved.</div>
+                </div>
+            `;
+
+            // Print in an isolated window so the live calculator state and event listeners remain intact.
+            const printWindow = window.open('', '_blank');
+            if (!printWindow) { alert('Print preview was blocked. Allow pop-ups for this file and try again.'); return; }
+            printWindow.document.open();
+            printWindow.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>NEA Refuse Output Report</title></head><body>${printContent.innerHTML}</body></html>`);
+            printWindow.document.close(); printWindow.focus();
+            setTimeout(() => { printWindow.print(); }, 250);
+        }
+
+        // ============================================================
+        // RE-INITIALIZE AFTER PRINT
+        // ============================================================
+        function reinitializeApp() {
+            // Re-bind all event listeners
+            document.getElementById('addRowBtn').addEventListener('click', addNewRow);
+            document.getElementById('resetDefaultBtn').addEventListener('click', resetToDefault);
+            document.getElementById('exportExcelBtn').addEventListener('click', exportToExcel);
+            document.getElementById('exportWordBtn').addEventListener('click', exportToWord);
+            document.getElementById('exportPdfBtn').addEventListener('click', exportToPDF);
+            document.getElementById('folderSaveBtn').addEventListener('click', saveToFolder);
+            document.getElementById('saveDraftBtn').addEventListener('click', downloadDraft);
+            document.getElementById('loadDraftBtn').addEventListener('click', () => document.getElementById('loadDraftInput').click());
+            document.getElementById('loadDraftInput').addEventListener('change', e => { if (e.target.files[0]) loadDraftFile(e.target.files[0]); e.target.value = ''; });
+            [['projectNameInput','projectName'],['projectRefInput','projectRef'],['preparedByInput','preparedBy']].forEach(([id,key]) => {
+                document.getElementById(id).addEventListener('input', e => { projectMeta[key] = e.target.value; persistState(); });
+            });
+            document.getElementById('pageSizeSelect').addEventListener('change', (e) => { pageSize = e.target.value; persistState(); });
+            
+            const radios = document.querySelectorAll('input[name="projectType"]');
+            radios.forEach(radio => {
+                radio.addEventListener('change', (e) => {
+                    if (e.target.checked) {
+                        currentProjectType = e.target.value;
+                        updateAllCalculations();
+                        persistState();
+                    }
+                });
+            });
+            
+            applyUpdateBtn.addEventListener('click', applyStandardsUpdate);
+            dismissUpdateBtn.addEventListener('click', () => {
+                updateNotification.classList.remove('show');
+            });
+            
+            renderTable();
+            updateAllCalculations();
+        }
+
+        // ============================================================
+        // INITIALIZATION
+        // ============================================================
+        async function init() {
+            renderRateTable();
+            if (!restoreState()) currentRows = defaultRows.map(r => ({ ...r, spaceType: r.spaceType || r.category }));
+
+            const radios = document.querySelectorAll('input[name="projectType"]');
+            radios.forEach(radio => {
+                radio.addEventListener('change', (e) => {
+                    if (e.target.checked) {
+                        currentProjectType = e.target.value;
+                        updateAllCalculations();
+                        persistState();
+                    }
+                });
+            });
+            hydrateControls();
+
+            renderTable();
+
+            document.getElementById('addRowBtn').addEventListener('click', addNewRow);
+            document.getElementById('resetDefaultBtn').addEventListener('click', resetToDefault);
+            document.getElementById('exportExcelBtn').addEventListener('click', exportToExcel);
+            document.getElementById('exportWordBtn').addEventListener('click', exportToWord);
+            document.getElementById('exportPdfBtn').addEventListener('click', exportToPDF);
+            document.getElementById('folderSaveBtn').addEventListener('click', saveToFolder);
+            document.getElementById('saveDraftBtn').addEventListener('click', downloadDraft);
+            document.getElementById('loadDraftBtn').addEventListener('click', () => document.getElementById('loadDraftInput').click());
+            document.getElementById('loadDraftInput').addEventListener('change', e => {
+                if (e.target.files[0]) loadDraftFile(e.target.files[0]);
+                e.target.value = '';
+            });
+            [['projectNameInput','projectName'],['projectRefInput','projectRef'],['preparedByInput','preparedBy']].forEach(([id,key]) => {
+                document.getElementById(id).addEventListener('input', e => {
+                    projectMeta[key] = e.target.value;
+                    persistState();
+                });
+            });
+
+            document.getElementById('pageSizeSelect').addEventListener('change', (e) => {
+                pageSize = e.target.value;
+                persistState();
+            });
+
+            applyUpdateBtn.addEventListener('click', applyStandardsUpdate);
+            dismissUpdateBtn.addEventListener('click', () => {
+                updateNotification.classList.remove('show');
+            });
+
+            // Load and automatically apply the latest extractor-validated standards manifest.
+            await loadAutomaticStandards();
+
+        }
+
+        // Run on load
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
+
+        // Expose functions for debugging
+        window.getReportData = getReportData;
+        window.exportToPDF = exportToPDF;
+        window.exportToExcel = exportToExcel;
+        window.exportToWord = exportToWord;
+        window.saveToFolder = saveToFolder;
+        window.CONSTANTS = CONSTANTS;
+    })();
+</script>
+</body>
+</html>
