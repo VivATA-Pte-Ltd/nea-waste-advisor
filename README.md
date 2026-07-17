@@ -1,6 +1,10 @@
 # NEA Refuse Output & Waste System Advisor
 
-Responsive VivATA calculator for NEA COPEH refuse-output rates and related waste-infrastructure thresholds.
+VivATA office deployment for NEA COPEH refuse-output rates and related waste-infrastructure thresholds.
+
+**Office calculator:** https://vivata-pte-ltd.github.io/nea-waste-advisor/
+
+The software is independently developed by VivaTEQ Pte Ltd and is not affiliated with, approved by, or endorsed by NEA or any other Singapore authority. It is an informational design aid; QP review and project-specific authority confirmation remain necessary.
 
 ## Automatic standards workflow
 
@@ -26,4 +30,4 @@ python -m unittest discover -s tests -v
 
 Automatic extraction can safely update recognized rates and rules. A structural rewrite of COPEH, renamed categories, or an ambiguous table causes a fail-closed result rather than guessing. QP review and project-specific authority confirmation remain necessary.
 
-© VivATA Pte Ltd. All rights reserved.
+Repository operated by VivATA Pte Ltd for office use. Software © VivaTEQ Pte Ltd. All rights reserved.
